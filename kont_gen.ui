@@ -135,19 +135,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="view_yd_descript1">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>260</y>
-      <width>31</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="view_yd_descript2">
     <property name="geometry">
      <rect>
@@ -161,39 +148,10 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="view_adw_title2">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>410</y>
-      <width>31</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="view_adw_title1">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>410</y>
-      <width>31</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QLabel" name="view_adw_descript">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>520</x>
       <y>440</y>
       <width>31</width>
       <height>21</height>
@@ -405,6 +363,19 @@
      <string>Экспортировать Шаблоны</string>
     </property>
    </widget>
+   <widget class="QLabel" name="view_adw_title">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>410</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>pushButton</zorder>
@@ -417,15 +388,13 @@
    <zorder>label_4</zorder>
    <zorder>label_8</zorder>
    <zorder>view_yd_title</zorder>
-   <zorder>view_yd_descript1</zorder>
    <zorder>view_yd_descript2</zorder>
-   <zorder>view_adw_title2</zorder>
-   <zorder>view_adw_title1</zorder>
    <zorder>view_adw_descript</zorder>
    <zorder>label_12</zorder>
    <zorder>label_13</zorder>
    <zorder>pushButton_3</zorder>
    <zorder>pushButton_4</zorder>
+   <zorder>view_adw_title</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
