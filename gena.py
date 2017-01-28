@@ -19,6 +19,10 @@ class Gena(QMainWindow):
         self.yd_descript2.setEnabled(False)
 
     def initSignal(self):
+        # Заполняем ключевые запросы и пересекаем и
+        self.perese4.clicked.connect(self.show_perese4)
+        # self.zapros_1.textChanged.connect(self.zapros_to_lst)
+        # self.zapros_2.textChanged.connect(self.zapros_to_lst)
         # Редактирование объявлений Яндекс.Директ
         self.yd_title.textChanged.connect(self.def_yd_len_title)
         self.yd_title.textChanged.connect(self.def_yd_descript1_on)
@@ -37,7 +41,23 @@ class Gena(QMainWindow):
         self.adw_title1.textChanged.connect(self.def_view_adw_title)
         self.adw_title2.textChanged.connect(self.def_view_adw_title)
 
-    def def_view_yd_title(self, text): #Визуализация Заголовка ДИРЕКТ
+    def show_perese4(self):
+        stroka = ''
+        zapros3 = self.zapros_to_lst()
+        for i in zapros3:
+            stroka += i + '\n'
+        self.result_zapros.setPlainText(stroka)
+
+
+
+
+    def zapros_to_lst(self):  # сохраняем в списки
+        zapros1 = self.zapros_1.toPlainText().split('\n')
+        zapros2 = self.zapros_2.toPlainText().split('\n')
+        result_zapros = [a + ' ' + b for a in zapros1 for b in zapros2]
+        return result_zapros
+
+    def def_view_yd_title(self, text):  # Визуализация Заголовка ДИРЕКТ
         stroka = ''
         if len(self.yd_title.text()) > 0:
             stroka += self.yd_title.text()
@@ -47,7 +67,7 @@ class Gena(QMainWindow):
         self.view_yd_title.setText(stroka)
         self.view_yd_title.adjustSize()
 
-    def def_view_adw_title(self, text): #Визуализация Заголовка ADWORDS
+    def def_view_adw_title(self, text):  # Визуализация Заголовка ADWORDS
         stroka = ''
         if len(self.adw_title1.text()) > 0:
             stroka += self.adw_title1.text()
@@ -89,7 +109,8 @@ class Gena(QMainWindow):
         self.yd_len_descript1.setText(str(advanced_descript1))
         self.yd_len_descript1.setText(str(advanced_descript1 - len_descript1))
 
-    def def_yd_len_descript2(self):  # Вычисляем возможную длину описания, когда уже известна длина расширенного заголовка.
+    def def_yd_len_descript2(
+            self):  # Вычисляем возможную длину описания, когда уже известна длина расширенного заголовка.
         max_descript = 75
         advanced_title = len(self.yd_descript1.text())
         len_descript2 = max_descript - advanced_title - len(self.yd_descript2.text())
