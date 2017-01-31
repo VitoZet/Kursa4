@@ -57,8 +57,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>0</y>
-      <width>201</width>
+      <y>10</y>
+      <width>91</width>
       <height>21</height>
      </rect>
     </property>
@@ -69,9 +69,9 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>0</y>
-      <width>201</width>
+      <x>260</x>
+      <y>10</y>
+      <width>101</width>
       <height>21</height>
      </rect>
     </property>
@@ -179,6 +179,9 @@
        <property name="maxLength">
         <number>33</number>
        </property>
+       <property name="placeholderText">
+        <string>Заголовок max 33</string>
+       </property>
       </widget>
      </item>
      <item row="0" column="2">
@@ -200,6 +203,9 @@
        <property name="maxLength">
         <number>56</number>
        </property>
+       <property name="placeholderText">
+        <string>Описание 1</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="2">
@@ -220,6 +226,9 @@
       <widget class="QLineEdit" name="yd_descript2">
        <property name="maxLength">
         <number>75</number>
+       </property>
+       <property name="placeholderText">
+        <string>Описание2</string>
        </property>
       </widget>
      </item>
@@ -245,7 +254,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label_14">
        <property name="text">
-        <string>Заголовок1 max 30</string>
+        <string>Заголовок max 30</string>
        </property>
       </widget>
      </item>
@@ -253,6 +262,9 @@
       <widget class="QLineEdit" name="adw_title1">
        <property name="maxLength">
         <number>30</number>
+       </property>
+       <property name="placeholderText">
+        <string>Заголовок max 30</string>
        </property>
       </widget>
      </item>
@@ -273,14 +285,17 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_11">
        <property name="text">
-        <string>Заголовок2 max 30</string>
+        <string>Описание1 max 38</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="adw_title2">
+      <widget class="QLineEdit" name="adw_descript1">
        <property name="maxLength">
-        <number>30</number>
+        <number>38</number>
+       </property>
+       <property name="placeholderText">
+        <string>Описание1 max 38</string>
        </property>
       </widget>
      </item>
@@ -294,14 +309,17 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_10">
        <property name="text">
-        <string>Описание max 80</string>
+        <string>Описание2 max 38</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1" colspan="2">
-      <widget class="QLineEdit" name="adw_descript">
+      <widget class="QLineEdit" name="adw_descript2">
        <property name="maxLength">
-        <number>80</number>
+        <number>38</number>
+       </property>
+       <property name="placeholderText">
+        <string>Описание2 max 38</string>
        </property>
       </widget>
      </item>
@@ -329,6 +347,9 @@
       <height>161</height>
      </rect>
     </property>
+    <property name="placeholderText">
+     <string>Добавьте запросы</string>
+    </property>
    </widget>
    <widget class="QTextEdit" name="zapros_2">
     <property name="geometry">
@@ -338,6 +359,9 @@
       <width>231</width>
       <height>161</height>
      </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Добавьте запросы</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="result_zapros">
@@ -362,6 +386,9 @@
     <property name="maxLength">
      <number>30</number>
     </property>
+    <property name="placeholderText">
+     <string>Название Группы</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="url">
     <property name="geometry">
@@ -374,6 +401,9 @@
     </property>
     <property name="maxLength">
      <number>30</number>
+    </property>
+    <property name="placeholderText">
+     <string>Релевантный URL</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_15">
@@ -441,6 +471,19 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QPushButton" name="test_button">
+    <property name="geometry">
+     <rect>
+      <x>564</x>
+      <y>500</y>
+      <width>281</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Записать в шаблоны</string>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>perese4</zorder>
@@ -465,6 +508,7 @@
    <zorder>line</zorder>
    <zorder>line_2</zorder>
    <zorder>line_3</zorder>
+   <zorder>test_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
