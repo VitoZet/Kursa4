@@ -16,10 +16,15 @@ class Gena(QMainWindow):
 
     def initUi(self):
         loadUi('kont_gen.ui', self)
+        self.viewHistory()
         self.yd_descript1.setEnabled(False)
         self.yd_descript2.setEnabled(False)
 
+
     def initSignal(self):
+
+        self.actionViewHistory.triggered.connect(self.viewHistory)  # панель истории
+
         # Заполняем ключевые запросы и пересекаем их
         self.perese4.clicked.connect(self.showPerese4)
         self.test_button.clicked.connect(self.csvYD)  # Записать в шаблон
@@ -44,7 +49,7 @@ class Gena(QMainWindow):
     def csvYD(self):  # соеденяем списки и записываем в csv
         # переменные для шаблона Яндекс.Директ
         lst_in_csv_YD = ['Название группы;Фраза (с минус-словами);Заголовок;Текст;Ссылка']
-        csv_yd_title = self.lenYdTitle()
+        csv_yd_title = [self.yd_title.text()]
         csv_key = self.zapros_to_lst()
         csv_yd_descript = [self.yd_descript1.text() + ' ' + self.yd_descript2.text()]
         # переменные для шаблона Google.Adwords
@@ -57,7 +62,7 @@ class Gena(QMainWindow):
         csv_name_group = [self.name_group.text()]
         csv_url = [self.url.text()]
 
-        #Создаем списки Google.Adwords для двух отдельных шаблонов
+        # Создаем списки Google.Adwords для двух отдельных шаблонов
         lst1_in_csv_ADW.append(csv_name_group[0] + ';' + csv_ADW_title[0] + ';' + csv_ADW_descript1[0] + ';' + csv_ADW_descript2[0] + ';' + csv_url[0])
         for adw_key in csv_key:
             lst2_in_csv_ADW.append(adw_key + ';' + csv_name_group[0])
@@ -119,14 +124,12 @@ class Gena(QMainWindow):
         # self.label_5.setText(self.adw_title1.text() + ' - ' + self.adw_descript1.text()) - альтернативный способ, но "-" остается
 
     def lenYdTitle(self):  # Замеряем длину заголовка Директ
-        csv_title = [self.yd_title.text()]  # для записи в CSV
         max_title = 33
         len_title = len(self.yd_title.text())
         self.yd_len_title.setText(str(max_title - len_title))
         self.view_yd_title.setText(self.yd_title.text())  # выводим на визуализацию
         self.view_yd_title.adjustSize()
-        # print(csv_title)
-        return csv_title
+        self.yd_descript1.setMaxLength(56 - len(self.yd_title.text()))
 
     def onYdDescript1(
             self):  # Включаем возможность ввода текста в расширенный заголовок, когда известна длина основного загоовка
@@ -137,7 +140,7 @@ class Gena(QMainWindow):
             self.yd_descript1.setEnabled(False)
 
     def onYdDescript2(self,
-                            text):  # Включаем возможность ввода текста, когда известна, длина расширенного заголовка.
+                      text):  # Включаем возможность ввода текста, когда известна, длина расширенного заголовка.
         len_descript1 = len(self.yd_descript1.text())
         if len_descript1 > 0:
             self.yd_descript2.setEnabled(True)
@@ -147,6 +150,7 @@ class Gena(QMainWindow):
     def lenYdDescript1(self):  # Вычисляем и показываем возможную длину для расширенного заголовка
         advanced_title = 56
         len_title = len(self.yd_title.text())
+
         len_descript1 = len(self.yd_descript1.text())
         advanced_descript1 = advanced_title - len_title
         self.yd_len_descript1.setText(str(advanced_descript1))
@@ -158,6 +162,7 @@ class Gena(QMainWindow):
         advanced_title = len(self.yd_descript1.text())
         len_descript2 = max_descript - advanced_title - len(self.yd_descript2.text())
         self.yd_len_descript2.setText(str(len_descript2))
+        self.yd_descript2.setMaxLength(max_descript - advanced_title)
 
     def viewYdDescript2(self, text):  # выводим на визуализацию дискрипшен 2
         self.view_yd_descript2.setText(text)
@@ -169,16 +174,19 @@ class Gena(QMainWindow):
         self.adw_len_title1.setText(str(max_title - len_adw_title1))
 
     def lenAdwTitle2(self, text):  # Вычисляем и показываем расширенный заголовок в ADWORDS
-        max_title = 30
+        max_title = 38
         len_adw_descript1 = len(self.adw_descript1.text())
         self.adw_len_title2.setText(str(max_title - len_adw_descript1))
 
     def viewAdwDescript(self, text):  # Вычисляем и показываем описание в ADWORDS
-        max_title = 80
+        max_title = 38
         len_adw_descript = len(self.adw_descript2.text())
         self.adw_len_descript.setText(str(max_title - len_adw_descript))
         self.view_adw_descript.setText(text)
         self.view_adw_descript.adjustSize()
+
+    def viewHistory(self):
+        self.historyDockWidget.setVisible(self.actionViewHistory.isChecked())
 
 
 if __name__ == '__main__':
