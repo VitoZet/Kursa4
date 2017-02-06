@@ -1,7 +1,8 @@
 # coding: utf-8
-
+import pickle
 import sys
 import csv
+import os
 
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QLabel,
                              QVBoxLayout, QLineEdit)
@@ -20,14 +21,16 @@ class Gena(QMainWindow):
         self.yd_descript1.setEnabled(False)
         self.yd_descript2.setEnabled(False)
 
-
     def initSignal(self):
 
         self.actionViewHistory.triggered.connect(self.viewHistory)  # панель истории
-
+        pickle_file = os.listdir('pickle_file/')
+        self.listView.model(pickle_file)
         # Заполняем ключевые запросы и пересекаем их
         self.perese4.clicked.connect(self.showPerese4)
         self.test_button.clicked.connect(self.csvYD)  # Записать в шаблон
+        self.NextButton.clicked.connect(self.savePickle)  # Записать в pickle
+
         # Редактирование объявлений Яндекс.Директ
         self.yd_title.textChanged.connect(self.lenYdTitle)
         self.yd_title.textChanged.connect(self.onYdDescript1)
@@ -46,6 +49,29 @@ class Gena(QMainWindow):
         self.adw_title1.textChanged.connect(self.viewAdwTitle)
         self.adw_descript1.textChanged.connect(self.viewAdwTitle)
 
+    def savePickle(self):
+
+        print(self.vseInLst())
+
+    def vseInLst(self):
+        vse_polja = {
+            'zapros_1': self.zapros_1.toPlainText(),
+            'zapros_2': self.zapros_2.toPlainText(),
+            'result_zapros': self.result_zapros.toPlainText(),
+            'yd_title': self.yd_title.text(),
+            'yd_descript1': self.yd_descript1.text(),
+            'yd_descript2': self.yd_descript2.text(),
+            'adw_title1': self.adw_title1.text(),
+            'adw_descript1': self.adw_descript1.text(),
+            'adw_descript2': self.adw_descript2.text(),
+            'name_group': self.name_group.text(),
+            'url': self.url.text()
+        }
+        with open('pickle_file/' + self.name_group.text() + '.pickle', 'wb') as f:
+            pickle.dump(vse_polja, f)
+
+        return vse_polja
+
     def csvYD(self):  # соеденяем списки и записываем в csv
         # переменные для шаблона Яндекс.Директ
         lst_in_csv_YD = ['Название группы;Фраза (с минус-словами);Заголовок;Текст;Ссылка']
@@ -63,7 +89,9 @@ class Gena(QMainWindow):
         csv_url = [self.url.text()]
 
         # Создаем списки Google.Adwords для двух отдельных шаблонов
-        lst1_in_csv_ADW.append(csv_name_group[0] + ';' + csv_ADW_title[0] + ';' + csv_ADW_descript1[0] + ';' + csv_ADW_descript2[0] + ';' + csv_url[0])
+        lst1_in_csv_ADW.append(
+            csv_name_group[0] + ';' + csv_ADW_title[0] + ';' + csv_ADW_descript1[0] + ';' + csv_ADW_descript2[0] + ';' +
+            csv_url[0])
         for adw_key in csv_key:
             lst2_in_csv_ADW.append(adw_key + ';' + csv_name_group[0])
 
@@ -73,18 +101,18 @@ class Gena(QMainWindow):
                 csv_name_group[0] + ';' + yd_key + ';' + csv_yd_title[0] + ';' + csv_yd_descript[0] + ';' + csv_url[0])
 
         # Записываем Яндекс.Шаблон
-        with open('Yandex_DIRECT.csv', 'w', newline='') as csv_file_yd:
+        with open('Yandex_DIRECT.csv', 'a', newline='') as csv_file_yd:
             csv_writer1 = csv.writer(csv_file_yd)
             for item in lst_in_csv_YD:
                 csv_writer1.writerow([item])
 
         # Записываем Adwords Шаблон
-        with open('Google_ADW_1.csv', 'w', newline='') as csv_file_adw1:
+        with open('Google_ADW_1.csv', 'a', newline='') as csv_file_adw1:
             csv_writer2 = csv.writer(csv_file_adw1)
             for item in lst1_in_csv_ADW:
                 csv_writer2.writerow([item])
         # Записываем Adwords Шаблон2
-        with open('Google_ADW_2.csv', 'w', newline='') as csv_file_adw2:
+        with open('Google_ADW_2.csv', 'a', newline='') as csv_file_adw2:
             csv_writer3 = csv.writer(csv_file_adw2)
             for item in lst2_in_csv_ADW:
                 csv_writer3.writerow([item])

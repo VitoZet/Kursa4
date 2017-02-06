@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>686</height>
+    <width>1090</width>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -549,6 +549,13 @@ margin-right: 5;</string>
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="NextButton">
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </widget>
+    </item>
    </layout>
    <zorder>line</zorder>
    <zorder>line_2</zorder>
@@ -556,13 +563,14 @@ margin-right: 5;</string>
    <zorder>test_button</zorder>
    <zorder>widget</zorder>
    <zorder>widget_4</zorder>
+   <zorder>NextButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
+     <width>1090</width>
      <height>21</height>
     </rect>
    </property>
