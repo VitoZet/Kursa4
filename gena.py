@@ -15,6 +15,9 @@ class Gena(QMainWindow):
         self.initUi()
         self.initSignal()
 
+        self.pickle_files = os.listdir('pickle_file/')
+        self.listWidget.addItems(self.pickle_files)
+
     def initUi(self):
         loadUi('kont_gen.ui', self)
         self.viewHistory()
@@ -24,8 +27,7 @@ class Gena(QMainWindow):
     def initSignal(self):
 
         self.actionViewHistory.triggered.connect(self.viewHistory)  # панель истории
-        pickle_file = os.listdir('pickle_file/')
-        self.listView.model(pickle_file)
+
         # Заполняем ключевые запросы и пересекаем их
         self.perese4.clicked.connect(self.showPerese4)
         self.test_button.clicked.connect(self.csvYD)  # Записать в шаблон
