@@ -543,16 +543,16 @@ margin-right: 5;</string>
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="test_button">
+     <widget class="QPushButton" name="NextButton">
       <property name="text">
-       <string>Записать в шаблоны</string>
+       <string>Сохранить и создать следующую группу объявлений</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="NextButton">
+     <widget class="QPushButton" name="test_button">
       <property name="text">
-       <string>Next</string>
+       <string>Записать в шаблоны CSV</string>
       </property>
      </widget>
     </item>
@@ -560,10 +560,10 @@ margin-right: 5;</string>
    <zorder>line</zorder>
    <zorder>line_2</zorder>
    <zorder>line_3</zorder>
-   <zorder>test_button</zorder>
    <zorder>widget</zorder>
    <zorder>widget_4</zorder>
    <zorder>NextButton</zorder>
+   <zorder>test_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -597,6 +597,13 @@ margin-right: 5;</string>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QListWidget" name="listNameGroupWidget"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ClearPushButton">
+       <property name="text">
+        <string>Очистить Рабочую Папку</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

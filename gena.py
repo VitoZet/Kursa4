@@ -3,7 +3,6 @@ import pickle
 import sys
 import csv
 import os
-
 from PyQt5.QtWidgets import (QApplication, QMainWindow)
 from PyQt5.uic import loadUi
 
@@ -65,7 +64,7 @@ class Gena(QMainWindow):
             self.name_group.setText(pic_file['name_group'])
             self.url.setText(pic_file['url'])
 
-    def savePickle(self): #сохраняем все введенные данные словарём в pickle
+    def savePickle(self):  # сохраняем все введенные данные словарём в pickle
         vse_polja = {
             'zapros_1': self.zapros_1.toPlainText(),
             'zapros_2': self.zapros_2.toPlainText(),
@@ -81,6 +80,10 @@ class Gena(QMainWindow):
         }
         with open('pickle_file/' + self.name_group.text() + '.pickle', 'wb') as f:
             pickle.dump(vse_polja, f)
+        # Очищаем Виджет с файлами пикл и добавляем заного с новым файлом
+        self.listNameGroupWidget.clear()
+        self.pickle_files = os.listdir('pickle_file/')
+        self.listNameGroupWidget.addItems(self.pickle_files)
 
     def csvYD(self):  # соеденяем списки и записываем в csv
         # переменные для шаблона Яндекс.Директ
