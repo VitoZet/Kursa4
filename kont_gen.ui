@@ -596,7 +596,7 @@ margin-right: 5;</string>
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QListWidget" name="listNameGroupWidget"/>
      </item>
     </layout>
    </widget>

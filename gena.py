@@ -4,8 +4,7 @@ import sys
 import csv
 import os
 
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QLabel,
-                             QVBoxLayout, QLineEdit)
+from PyQt5.QtWidgets import (QApplication, QMainWindow)
 from PyQt5.uic import loadUi
 
 
@@ -15,9 +14,6 @@ class Gena(QMainWindow):
         self.initUi()
         self.initSignal()
 
-        self.pickle_files = os.listdir('pickle_file/')
-        self.listWidget.addItems(self.pickle_files)
-
     def initUi(self):
         loadUi('kont_gen.ui', self)
         self.viewHistory()
@@ -25,14 +21,17 @@ class Gena(QMainWindow):
         self.yd_descript2.setEnabled(False)
 
     def initSignal(self):
-
-        self.actionViewHistory.triggered.connect(self.viewHistory)  # панель истории
-
+        # панель истории c группами объявлений, файлы pickle
+        self.actionViewHistory.triggered.connect(self.viewHistory)
+        self.pickle_files = os.listdir('pickle_file/')
+        self.listNameGroupWidget.addItems(self.pickle_files)
+        self.listNameGroupWidget.activated.connect(self.viewPickle)
         # Заполняем ключевые запросы и пересекаем их
         self.perese4.clicked.connect(self.showPerese4)
-        self.test_button.clicked.connect(self.csvYD)  # Записать в шаблон
-        self.NextButton.clicked.connect(self.savePickle)  # Записать в pickle
-
+        # Записать в шаблон
+        self.test_button.clicked.connect(self.csvYD)
+        # Записать в pickle
+        self.NextButton.clicked.connect(self.savePickle)
         # Редактирование объявлений Яндекс.Директ
         self.yd_title.textChanged.connect(self.lenYdTitle)
         self.yd_title.textChanged.connect(self.onYdDescript1)
@@ -51,11 +50,22 @@ class Gena(QMainWindow):
         self.adw_title1.textChanged.connect(self.viewAdwTitle)
         self.adw_descript1.textChanged.connect(self.viewAdwTitle)
 
-    def savePickle(self):
+    def viewPickle(self, name):  # отображаем данные из файлов Pickle
+        with open('pickle_file/' + name.data(), 'rb') as f:
+            pic_file = pickle.load(f)
+            self.zapros_1.setText(pic_file['zapros_1'])
+            self.zapros_2.setText(pic_file['zapros_2'])
+            self.result_zapros.setText(pic_file['result_zapros'])
+            self.yd_title.setText(pic_file['yd_title'])
+            self.yd_descript1.setText(pic_file['yd_descript1'])
+            self.yd_descript2.setText(pic_file['yd_descript2'])
+            self.adw_title1.setText(pic_file['adw_title1'])
+            self.adw_descript1.setText(pic_file['adw_descript1'])
+            self.adw_descript2.setText(pic_file['adw_descript2'])
+            self.name_group.setText(pic_file['name_group'])
+            self.url.setText(pic_file['url'])
 
-        print(self.vseInLst())
-
-    def vseInLst(self):
+    def savePickle(self): #сохраняем все введенные данные словарём в pickle
         vse_polja = {
             'zapros_1': self.zapros_1.toPlainText(),
             'zapros_2': self.zapros_2.toPlainText(),
@@ -71,8 +81,6 @@ class Gena(QMainWindow):
         }
         with open('pickle_file/' + self.name_group.text() + '.pickle', 'wb') as f:
             pickle.dump(vse_polja, f)
-
-        return vse_polja
 
     def csvYD(self):  # соеденяем списки и записываем в csv
         # переменные для шаблона Яндекс.Директ
@@ -215,7 +223,7 @@ class Gena(QMainWindow):
         self.view_adw_descript.setText(text)
         self.view_adw_descript.adjustSize()
 
-    def viewHistory(self):
+    def viewHistory(self):  # Открываем панель с списком групп объявлений
         self.historyDockWidget.setVisible(self.actionViewHistory.isChecked())
 
 
