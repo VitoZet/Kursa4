@@ -18,12 +18,11 @@ class Gena(QMainWindow):
         self.viewHistory()
         self.yd_descript1.setEnabled(False)
         self.yd_descript2.setEnabled(False)
+        self.openHistoryPickle()
 
     def initSignal(self):
         # панель истории c группами объявлений, файлы pickle
         self.actionViewHistory.triggered.connect(self.viewHistory)
-        self.pickle_files = os.listdir('pickle_file/')
-        self.listNameGroupWidget.addItems(self.pickle_files)
         self.listNameGroupWidget.activated.connect(self.viewPickle)
         # Заполняем ключевые запросы и пересекаем их
         self.perese4.clicked.connect(self.showPerese4)
@@ -48,6 +47,10 @@ class Gena(QMainWindow):
         self.adw_descript2.textChanged.connect(self.viewAdwDescript)
         self.adw_title1.textChanged.connect(self.viewAdwTitle)
         self.adw_descript1.textChanged.connect(self.viewAdwTitle)
+
+    def openHistoryPickle(self): # Отображаем список групп объявлений в истории
+        self.pickle_files = os.listdir('pickle_file/')
+        self.listNameGroupWidget.addItems(self.pickle_files)
 
     def viewPickle(self, name):  # отображаем данные из файлов Pickle
         with open('pickle_file/' + name.data(), 'rb') as f:
@@ -82,8 +85,7 @@ class Gena(QMainWindow):
             pickle.dump(vse_polja, f)
         # Очищаем Виджет с файлами пикл и добавляем заного с новым файлом
         self.listNameGroupWidget.clear()
-        self.pickle_files = os.listdir('pickle_file/')
-        self.listNameGroupWidget.addItems(self.pickle_files)
+        self.openHistoryPickle()
 
     def csvYD(self):  # соеденяем списки и записываем в csv
         # переменные для шаблона Яндекс.Директ
