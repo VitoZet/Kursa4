@@ -1,4 +1,5 @@
 # coding: utf-8
+import shutil
 import pickle
 import sys
 import csv
@@ -21,6 +22,8 @@ class Gena(QMainWindow):
         self.openHistoryPickle()
 
     def initSignal(self):
+        # чистим папку с pickle
+        self.ClearPushButton.clicked.connect(self.deletePickleFolder)
         # панель истории c группами объявлений, файлы pickle
         self.actionViewHistory.triggered.connect(self.viewHistory)
         self.listNameGroupWidget.activated.connect(self.viewPickle)
@@ -48,9 +51,15 @@ class Gena(QMainWindow):
         self.adw_title1.textChanged.connect(self.viewAdwTitle)
         self.adw_descript1.textChanged.connect(self.viewAdwTitle)
 
-    def openHistoryPickle(self): # Отображаем список групп объявлений в истории
-        self.pickle_files = os.listdir('pickle_file/')
-        self.listNameGroupWidget.addItems(self.pickle_files)
+    def deletePickleFolder(self, name): # Чистим папку pickle
+        pickle_files = os.listdir('pickle_file/')
+        for i in pickle_files:
+            os.remove('pickle_file/' + i)
+        self.listNameGroupWidget.clear()
+
+    def openHistoryPickle(self):  # Отображаем список групп объявлений в истории
+        pickle_files = os.listdir('pickle_file/')
+        self.listNameGroupWidget.addItems(pickle_files)
 
     def viewPickle(self, name):  # отображаем данные из файлов Pickle
         with open('pickle_file/' + name.data(), 'rb') as f:
