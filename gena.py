@@ -61,56 +61,71 @@ class Gena(QMainWindow):
         self.listNameGroupWidget.clear()
         self.openHistoryPickle()
 
-    def SaveInCSV(self):
-        lst1_in_csv_ADW = ['adgroup;headline;description line 1;description line 2;final url']
-        lst2_in_csv_ADW = ['keyword;adgroup']
-        lst_in_csv_YD = ['Название группы;Фраза (с минус-словами);Заголовок;Текст;Ссылка']
+    def SaveInCSV(self):  # Сохраняем в csv 3 шаблона
         pickle_files = os.listdir('pickle_file/')
-        for i in pickle_files:
-            with open('pickle_file/' + i, 'rb') as f:
-                pic_file = pickle.load(f)
-            name_group = pic_file['name_group']
-            adw_title1 = pic_file['adw_title1']
-            adw_descript1 = pic_file['adw_descript1']
-            adw_descript2 = pic_file['adw_descript2']
-            url = pic_file['url']
-            yd_title = pic_file['yd_title']
-            yd_descript1 = pic_file['yd_descript1']
-            yd_descript2 = pic_file['yd_descript2']
-            yd_descript = yd_descript1 + ' '+ yd_descript2
-            result_zapros = pic_file['result_zapros'].split('\n')
+        with open('Yandex_DIRECT.csv', 'w', newline='') as csvfile1:
+            lst_in_csv_YD = ['Название группы', 'Фраза (с минус-словами)', 'Заголовок', 'Текст', 'Ссылка']
+            writer = csv.DictWriter(csvfile1, fieldnames=lst_in_csv_YD, delimiter=';')
+            writer.writeheader()
+            for i in pickle_files:
+                with open('pickle_file/' + i, 'rb') as f:
+                    pic_file = pickle.load(f)
 
-            # создаем лист1 для шаблон1 для Гугл Адвордс
-            lst1_in_csv_ADW.append(
-                name_group + ';' + adw_title1 + ';' + adw_descript1 + ';' + adw_descript2 + ';' +
-                url)
+                    name_group = pic_file['name_group']
+                    result_zapros = pic_file['result_zapros'].split('\n')
+                    yd_title = pic_file['yd_title']
+                    yd_descript1 = pic_file['yd_descript1']
+                    yd_descript2 = pic_file['yd_descript2']
+                    yd_descript = yd_descript1 + ' ' + yd_descript2
+                    url = pic_file['url']
 
-            # создаем шаблон2 для Гугл Адвордс
-            for key_adw2 in result_zapros:
-                lst2_in_csv_ADW.append(key_adw2 + ';' + name_group)
+                    for key in result_zapros:
+                        writer.writerow({
+                            'Название группы': name_group,
+                            'Фраза (с минус-словами)': key,
+                            'Заголовок': yd_title,
+                            'Текст': yd_descript,
+                            'Ссылка': url
+                        })
 
-            # создаем лист для Яндекс Директ
-            for yd_key in result_zapros:
-                lst_in_csv_YD.append(
-                    name_group + ';' + yd_key + ';' + yd_title + ';' + yd_descript + ';' + url)
+        with open('Google_ADW_1.csv', 'w', newline='') as csvfile2:
+            lst1_in_csv_ADW = ['adgroup', 'headline', 'description line 1', 'description line 2', 'final url']
+            writer = csv.DictWriter(csvfile2, fieldnames=lst1_in_csv_ADW, delimiter=';')
+            writer.writeheader()
+            for i in pickle_files:
+                with open('pickle_file/' + i, 'rb') as f:
+                    pic_file = pickle.load(f)
 
-        # Записываем шаблон в Яндекс Директ
-        with open('Yandex_DIRECT.csv', 'w', newline='') as csv_file_yd:
-            csv_writer1 = csv.writer(csv_file_yd)
-            for item in lst_in_csv_YD:
-                csv_writer1.writerow([item])
+                    name_group = pic_file['name_group']
+                    adw_title1 = pic_file['adw_title1']
+                    adw_descript1 = pic_file['adw_descript1']
+                    adw_descript2 = pic_file['adw_descript2']
+                    url = pic_file['url']
 
-        # Записываем шаблон 1 Гугл Адворос
-        with open('Google_ADW_1.csv', 'w', newline='') as csv_file_adw1:
-            csv_writer2 = csv.writer(csv_file_adw1)
-            for item in lst1_in_csv_ADW:
-                csv_writer2.writerow([item])
+                    writer.writerow({
+                        'adgroup': name_group,
+                        'headline': adw_title1,
+                        'description line 1': adw_descript1,
+                        'description line 2': adw_descript2,
+                        'final url': url
+                    })
 
-        # Записываем шаблон 2 Гугл Адворос
-        with open('Google_ADW_2.csv', 'w', newline='') as csv_file_adw2:
-            csv_writer3 = csv.writer(csv_file_adw2)
-            for item in lst2_in_csv_ADW:
-                csv_writer3.writerow([item])
+        with open('Google_ADW_2.csv', 'w', newline='') as csvfile3:
+            lst2_in_csv_ADW = ['keyword', 'adgroup']
+            writer = csv.DictWriter(csvfile3, fieldnames=lst2_in_csv_ADW, delimiter=';')
+            writer.writeheader()
+            for i in pickle_files:
+                with open('pickle_file/' + i, 'rb') as f:
+                    pic_file = pickle.load(f)
+
+                    result_zapros = pic_file['result_zapros'].split('\n')
+                    name_group = pic_file['name_group']
+
+                    for key in result_zapros:
+                        writer.writerow({
+                            'keyword': key,
+                            'adgroup': name_group
+                        })
 
     def deletePickleFolder(self, name):  # Чистим папку pickle
         pickle_files = os.listdir('pickle_file/')
